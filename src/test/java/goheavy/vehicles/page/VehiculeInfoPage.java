@@ -1,5 +1,6 @@
 package goheavy.vehicles.page;
 
+import org.apache.commons.io.FilenameUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -7,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import general.PageObject;
 import general.Setup;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -30,7 +33,8 @@ public class VehiculeInfoPage extends TabsPage {
     private String formScroll = "//*[@id='step-one-form']/ancestor::div["
             + "@class='templateStyles__ContentDiv-sc-144t9h2-1 bcVeZj']";
     private String vehiclePayloadID;
-
+    private String uploadInputButton;
+    private String nextBtn;
     private String VehicleTypeXpath;
 
     String path = "/ancestor::div[contains(@class,'ant-form-item')]/descendant::div[@role='alert']";
@@ -71,8 +75,26 @@ public class VehiculeInfoPage extends TabsPage {
         setHeigthXpath("//input[@id='height']");
         setVehicleTypeXpath("//input[@id='vehicleTypeId']");
         setPayloadXpath("//input[@id='payload']");
+        setUploadInputButton("//label[text()='VIN Image']/ancestor::div[contains(@class,'ant-form-item')]/descendant::input[@type='file']");
+        //setNextBtn("//button[@type='submit']");
+        setNextBtn("//button[@type='submit']/descendant::span[text()='Next']");
+
+
+    }
+    public String getUploadInputButton(){
+        return uploadInputButton;
     }
 
+    public void setUploadInputButton(String uploadInputButton){
+        this.uploadInputButton = uploadInputButton;
+    }
+    public String getnextBtn(){
+        return nextBtn;
+    }
+
+    public void setnextBtn(String nextBtn){
+        this.nextBtn = nextBtn;
+    }
     public WebElement getVehicleInfoCheck() {
         return getWebElement(vehicleInfoCheck);
     }
@@ -201,7 +223,9 @@ public class VehiculeInfoPage extends TabsPage {
         this.carIconXpath = carIconXpath;
     }
 
-
+    private void getUploadInputButton(String uploadInputButton){
+            this.uploadInputButton = uploadInputButton;
+    }
     private String getVINInputXpath() {
         return this.VINInputXpath;
     }
@@ -237,6 +261,7 @@ public class VehiculeInfoPage extends TabsPage {
     private void setAddVehicleTitleXpath(String addVehicleTitleXpath) {
         this.addVehicleTitleXpath = addVehicleTitleXpath;
     }
+
 
     private String getVehicleTypeID() {
         return this.VehicleTypeID;
@@ -282,12 +307,71 @@ public class VehiculeInfoPage extends TabsPage {
         randomNum = tlr.nextInt(min_val, max_val + 1);
         sendDataToInput(getWebElement(By.id(getVehiclePayloadID())), String.valueOf(randomNum), null, getFormScroll());
         scrollToWebElement(null, getFormScroll());
+        //Hago la llamada al metodo despues de rellenar el formulario para que no de conflicto con los campos requeridos vacios
+        CheckUploadImageComponent(getUploadInputButton(), getNextBtn());
 
-        clickOn(getWebElement(By.xpath("//button[@type='submit']/descendant::span[text()='Next']")));
+        //clickOn(getWebElement(By.xpath("//button[@type='submit']/descendant::span[text()='Next']")));
+
+
         waitForSpinningElementDissapear();
         Setup.getWait().thread(1500);
 
     }
+
+    @Override
+    public void CheckUploadImageComponent(String uploadInputButton, String nextBtn) {
+        super.CheckUploadImageComponent(getUploadInputButton(), getNextBtn());
+
+    }
+
+
+    /*public void CheckUploadImageComponent(WebElement uploadButton) {
+        //If the file does not have the right format, the system shows the following error message: "You can only upload JPG/JPEG/PNG files".
+        //File invalid_file = new File("C:\\Users\\Kitty\\Desktop\\pl.xlsx");
+        //If the file exceeds the maximum size, the system shows the following error message: "The image must be smaller than 5 MB".
+        //File exceeds_max = new File("C:\\Users\\Kitty\\Desktop\\huge.png");
+        //If the file format and size are correct, the system uploads the file successfully and the "Add Vehicle" view shows the thumbnail of the uploaded image.
+        //File valid_file_PNG = new File("C:\\Users\\Kitty\\Desktop\\file1.png");
+        //File valid_file_JPG = new File("C:\\Users\\Kitty\\Desktop\\file2.png");
+        /*String nextBtn = "//button[@type='submit']";
+        waitForSpinningElementDissapear();
+        getWebElement(By.xpath(uploadInputButton)).sendKeys("C:\\Users\\Kitty\\Desktop\\pl.xlsx");
+        Setup.getDriver().findElement(By.xpath(nextBtn)).click();
+        Assert.assertTrue(Setup.getDriver().findElement(By.linkText("You can only upload JPG/JPEG/PNG files")).isDisplayed());
+*/
+
+            /*Wait<WebDriver> mywait = new FluentWait<WebDriver>(Setup.).withTimeout(10, TimeUnit.SECONDS)
+                    .pollingEvery(2,TimeUnit.SECONDS)
+                    .ignoring(NoSuchElementException.class);
+            Assert.assertTrue(getWebElement(By.xpath(getVINImageUploadItemXpath())).isDisplayed());*/
+
+        /*List<File> paths = new ArrayList<File>();
+        paths.add(valid_file_JPG);
+        paths.add(valid_file_PNG);
+        paths.add(invalid_file);
+        paths.add(exceeds_max);*/
+
+
+       /* for (File file : paths) {
+
+
+            String stringButton = "//body/div[@id='root']/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/form[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/span[1]/div[1]/span[1]/button[1]";
+            getWebElement(By.xpath(stringButton)).sendKeys(file.getName());
+            Setup.getWait().thread(1500);
+            //System.out.println(getWebElement(By.xpath(stringInput)).getText());
+
+            Assert.assertTrue("You can only upload JPG/JPEG/PNG files", !(FilenameUtils.getExtension(file.getAbsolutePath()).equals("jpg")));
+            Assert.assertTrue("You can only upload JPG/JPEG/PNG files", !(FilenameUtils.getExtension(file.getAbsolutePath()).equals("jpeg")));
+            Assert.assertTrue("You can only upload JPG/JPEG/PNG files", !(FilenameUtils.getExtension(file.getAbsolutePath()).equals("png")));
+            Assert.assertTrue("The image must be smaller than 5 MB", file.length() >= 5242880);
+            if (Setup.getDriver().findElement(By.linkText("You can only upload JPG/JPEG/PNG files")).isDisplayed()
+                    || Setup.getDriver().findElement(By.linkText("The image must be smaller than 5 MB")).isDisplayed()){
+                System.out.println("El fichero no cumple las expecificaciones requeridas");
+            }else{
+                System.out.println(file.getName());
+            }
+                    }*/
+    //}
 
     private void fillDimensions() {
         int min_val = 22;
@@ -338,5 +422,7 @@ public class VehiculeInfoPage extends TabsPage {
             return null;
         }
     }
+
+
 
 }

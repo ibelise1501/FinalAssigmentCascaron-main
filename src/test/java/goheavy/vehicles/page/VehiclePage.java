@@ -1,23 +1,23 @@
 package goheavy.vehicles.page;
 
-import java.text.DateFormat;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver.Timeouts;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import general.PageObject;
 import general.Setup;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 
 @SuppressWarnings("unused")
 public class VehiclePage extends PageObject {
@@ -37,6 +37,8 @@ public class VehiclePage extends PageObject {
             + "[@type='file']";
     By check = By.xpath("//span[@role='img' and @aria-label='check']/" +
             "ancestor::div[@class='ant-steps-item-container']/descendant::div[@class='ant-steps-item-title']");
+    private String nextBtn;
+    private String fileInputButton;
 
     public VehiclePage() {
         super();
@@ -48,8 +50,12 @@ public class VehiclePage extends PageObject {
                 + "'ant-col')]/descendant::span[text()='Add Vehicle']");
         setCarIconXpath("//span[text()='Add Vehicle']/span[@role='img' and @class='anticon anticon-car']");
         setStepBaseXpath("//div[@class='ant-steps-item-container']");
+
+        //Xpath Click to Upload input
         setVINImageUploadItemXpath("//label[@class='ant-form-item-required' and @title='VIN Image']/"
                 + "ancestor::div[@class='ant-row ant-form-item']/descendant::input[@type='file']");
+
+
         setVINInputXpath("//label[@title='Vehicle ID No. (VIN)' and text()='Vehicle ID No. (VIN)']/" +
                 "ancestor::div[contains(@class,'ant-form-item')]/" +
                 "descendant::input[@placeholder='XXXXXXXXXXXXXXXXX' and @maxlength='17']");
@@ -57,7 +63,20 @@ public class VehiclePage extends PageObject {
         setVehicleMakeXpath("//input[@placeholder='Enter Vehicle make' and @id='make']");
         setVehicleYearMakepath("//input[@placeholder='Enter Vehicle year']/ancestor::div[@class='ant-picker-input']");
         setVehicleCapacitySubSectionXpath("//span[@class='ant-divider-inner-text' and text()='Vehicle Capacity']");
+        setNextBtn("//button[@type='submit']");
         this.urlpath = "/vehicleinsurance";
+    }
+
+    public String getNextBtn() {
+        return nextBtn;
+    }
+
+    public String getfileInputButton() {
+        return fileInputButton;
+    }
+
+    public void setNextBtn(String nextBtn) {
+        this.nextBtn = nextBtn;
     }
 
     public WebElement getCheckText() {
@@ -365,16 +384,70 @@ public class VehiclePage extends PageObject {
 
     }
 
-    public void systemDisplaysMessage(String message) {
+    /*public boolean systemDisplaysMessage(String message) {
+        Setup.getWait().thread(3000);
+        waitForSpinningElementDissapear();
         try {
-            waitForSpinningElementDissapear();
-            String xpath = "//div[@class='ant-notification ant-notification-topRight']";
+            String xpath = "//div[text()='Assign Vehicle' and @class='ant-modal-title']";
             WebElement alert = getWebElement(By.xpath(xpath));
-            Assert.assertEquals(alert.getText(), message);
+            return true;
         } catch (Exception e) {
             Assert.fail(e.getMessage());
-
+            return false;
         }
+    }*/
+
+    public void systemDisplaysMessage(String message) {
+
+        waitForSpinningElementDissapear();
+        String xpath = "//div[@class='ant-notification ant-notification-topRight']";
+
+        WebElement alert = getWebElement(By.xpath(xpath));
+
+        //Espera de tipo Fluent Wait, para chequear la pagina cada 2seg por un intervalo de 10seg en busca del mensaje de fallo del upload file
+        Wait<WebDriver> mywait = new FluentWait<WebDriver>(Setup.getDriver())
+                .withTimeout(10, TimeUnit.SECONDS)
+                .pollingEvery(2, TimeUnit.SECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        WebDriver driver = Setup.getDriver();
+        WebElement msg = mywait.until(new Function<WebDriver, WebElement>() {
+            @Override
+            public WebElement apply(WebDriver driver) {
+                Assert.assertNotNull(alert.getText());
+                return alert;
+            }
+        });
+        //Assert.assertEquals(msg.getText(), message);
+        Assert.assertEquals(alert.getText(), message);
+    }
+
+
+    //Metodo utilizado para la captura y tratamiento del pop-up que se muestra cuando el fichero a subir con cumple las condiciones de tipo de extension y formato
+    public String systemDisplaysMessage_FailedUploadFiles(File file) {
+
+        waitForSpinningElementDissapear();
+        String xpath = "//div[@class='ant-notification ant-notification-topRight']";
+
+        WebElement alert = getWebElement(By.xpath(xpath));
+
+        //Espera de tipo Fluent Wait, para chequear la pagina cada 2seg por un intervalo de 10seg en busca del mensaje de fallo del upload file
+        Wait<WebDriver> mywait = new FluentWait<WebDriver>(Setup.getDriver())
+                .withTimeout(10, TimeUnit.SECONDS)
+                .pollingEvery(2, TimeUnit.SECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        WebDriver driver = Setup.getDriver();
+        WebElement msg = mywait.until(new Function<WebDriver, WebElement>() {
+            @Override
+            public WebElement apply(WebDriver driver) {
+                //Assert.assertEquals(alert.getText(), message);
+                Assert.assertNotNull(alert.getText());
+                return alert;
+            }
+        });
+        //Assert.assertEquals(msg.getText(), message);
+        return msg.getText();
     }
 
     public boolean hoverOverImageComponent() {
@@ -402,4 +475,49 @@ public class VehiclePage extends PageObject {
             return false;
         }
     }
+
+    //Metodo implementado para la validacion de las imagenes antes de cargarlas al DOM, aplicable a todos los input con Type=file (mismo comportamiento en todas las clases hijas)
+    public void CheckUploadImageComponent(String fileInputButton, String nextBtn) {
+        waitForSpinningElementDissapear();
+        //Defini 3 ficheros principales para hacer la prueba, donde los dos primeros fallaran y el 3ro se podra subir satisfactoriamente,
+        // aunque para agilizar la prueba se puede solo usar el 3er file
+        File invalid_file = new File("src/test/resources/pl.xlsx");
+        File exceeds_max = new File("src/test/resources/huge.png");
+        File valid_file_PNG = new File("src/test/resources/file2.jpg");
+        List<File> paths = new ArrayList<File>();
+        paths.add(invalid_file);
+        paths.add(exceeds_max);
+        paths.add(valid_file_PNG);
+        for (File file : paths) {
+            //Pasando el path absoluto del fichero al input no valida, solo captura el fichero a subir, por lo que es necesario simular
+            // el click en el botton Next para realizar la validacion
+            Setup.getDriver().findElement(By.xpath(fileInputButton)).sendKeys(file.getAbsolutePath());
+            Setup.getDriver().findElement(By.xpath(nextBtn)).click();
+
+            try {
+                if (file.getName().contains("JPG") && file.getName().contains("JPEG") && file.getName().contains("PNG")) {
+                    Assert.assertEquals(systemDisplaysMessage_FailedUploadFiles(file), "You can only upload JPG/JPEG/PNG files");
+                    if (file.length() >= 5242880) {
+                        Assert.assertEquals(systemDisplaysMessage_FailedUploadFiles(file), "The image must be smaller than 5 MB");
+                    } else {
+                        Assert.assertTrue(Setup.getDriver().findElement(By.xpath("//div[@class='styles__ImagePreviewActionsStyled-sc-1qjgkf9-12 kxeirt']")).isDisplayed());
+                        Assert.assertEquals(Setup.getDriver().findElement(By.xpath("//span[@class='styles__ItemStatusStyled-sc-1qjgkf9-14 gDWxff item-status']")).getText(),"Assessing");
+                    }
+
+                }
+            } catch (Exception e) {
+                Assert.fail(e.getMessage());
+            }
+
+
+        }
+
+        //inputBtn.sendKeys("C:\\Users\\Kitty\\Desktop\\pl.xlsx");
+
+        //nextBtn.click();
+
+
+        //systemDisplaysMessage("You can only upload JPG/JPEG/PNG files");
+    }
 }
+

@@ -110,7 +110,7 @@ public final class Setup {
 		//waitingObject.waitForLoading(3600);
 	}
 
-	@After
+	//@After
 	public void close() {
 		Setup.getWait().thread(3000);
 		driver.close();

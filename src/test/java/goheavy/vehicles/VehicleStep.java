@@ -11,6 +11,8 @@ import general.Steps;
 import goheavy.driver.pages.DriverPage;
 import goheavy.vehicles.page.*;
 
+import java.io.File;
+
 @SuppressWarnings("unused")
 public class VehicleStep extends Steps {
     public VehiclePage vehiclePage;
@@ -121,9 +123,15 @@ public class VehicleStep extends Steps {
         vehiclePage.clicks_button_done();
     }
 
-    public void systemDisplaysMessage(String message) {
+    public void systemDisplaysMessage( String message) {
         vehiclePage.systemDisplaysMessage(message);
     }
 
+    public void systemDisplaysMessage2( File file, String message, String fileInputButton, String nextBtn) {
+        vehiclePage.systemDisplaysMessage_FailedUploadFiles(file);
+    }
+    public void uploadFile(){
+       vehicleInfo.CheckUploadImageComponent(vehicleInfo.getUploadInputButton(), vehicleInfo.getNextBtn());
+    }
 
 }

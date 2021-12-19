@@ -21,6 +21,9 @@ public class VehiculeFeaturesPage extends TabsPage {
     By vehicleTrimErrorSMSLocator = By.xpath("//input[@id='trim']"+path);
     By vehicleTransmissionErrorSMSLocator = By.xpath("//input[@id='transmission']"+path);
     DrivingRequirementsPage drivingRequirementsPage;
+    String uploadInputButton = "//input[@type='file']";
+    //String uploadNextButton = "//button[@type='submit']";
+    String uploadNextButton = "//button[@type='submit']/descendant::span[text()='Next']";
 
     public VehiculeFeaturesPage() {
         super();
@@ -46,6 +49,7 @@ public class VehiculeFeaturesPage extends TabsPage {
     }
 
     public void insertValidData() {
+
         int min_val = 1995;
         int max_val = 2018;
 
@@ -62,7 +66,6 @@ public class VehiculeFeaturesPage extends TabsPage {
 
         sendDataToInput(getWebElement(By.id("transmission")),
                 getFaker().name().firstName(), null, getStepTwoFormScroll());
-
         if (min_val < 145)
             clickOn(getWebElement(By.xpath("//label[@title='Towing Kit Installed']/ancestor::" +
                     "div[@class='ant-row ant-form-item']/descendant::button[@type='button']")));
@@ -72,12 +75,19 @@ public class VehiculeFeaturesPage extends TabsPage {
                     "div[@class='ant-row ant-form-item']/descendant::button[@type='button']")));
 
         scrollToWebElement(null, getStepTwoFormScroll());
-        setImage(getWebElement(By.xpath(getVehiclePhotoImageXpath())), null);
+        //setImage(getWebElement(By.xpath(getVehiclePhotoImageXpath())), null);
 
-        clickOn(getWebElement(By.xpath("//button[@type='submit']/descendant::span[text()='Next']")));
+        //clickOn(getWebElement(By.xpath("//button[@type='submit']/descendant::span[text()='Next']")));
+        //Hago la llamada al metodo despues de rellenar el formulario para que no de conflicto con los campos requeridos vacios
+
+        CheckUploadImageComponent(uploadInputButton,uploadNextButton);
+
         waitForSpinningElementDissapear();
         Setup.getWait().thread(1500);
     }
+
+
+
     public boolean systemOpensAddVehicleView() {
         return true;
     }

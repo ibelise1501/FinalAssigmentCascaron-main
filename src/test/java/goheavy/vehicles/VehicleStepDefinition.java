@@ -40,6 +40,11 @@ public class VehicleStepDefinition {
         }
     }
 
+    @When("User uploads a Vehicle document image")
+    public void user_uploads_a_vehicle_document_image() {
+        vehicleStep.userInsertsValidDataAndClicksDone();
+    }
+
     @When("The user inserts valid data")
     public void the_user_inserts_valid_data_and_clicks_done_button() {
         try {

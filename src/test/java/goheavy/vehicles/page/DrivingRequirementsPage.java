@@ -1,5 +1,6 @@
 package goheavy.vehicles.page;
 
+import net.bytebuddy.asm.Advice;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -29,6 +30,10 @@ public class DrivingRequirementsPage extends TabsPage {
     By insuranceCertificateErrorSMSLocator = By.xpath("//input[@id='insuranceCertificateCompany']"+path);
     By insuranceRenewalErrorSMSLocator = By.xpath("//input[@id='insuranceRenewal']"+path);
     By vehicleLicensePlateErrorSMSLocator = By.xpath("//input[@id='licensePlateNo']"+path);
+    String uploadInputButton_CICP = "//label[text()='Current Insurance Certificate Picture']/ancestor::div[contains(@class,'ant-form-item')]/descendant::input[@type='file']";
+    String uploadInputButton_LPP = "//label[text()='License Plate Photo']/ancestor::div[contains(@class,'ant-form-item')]/descendant::input[@type='file']";
+    String uploadInputButton_VRS = "//label[text()='Vehicle Registration Sticker']/ancestor::div[contains(@class,'ant-form-item')]/descendant::input[@type='file']";
+    String doneButton = "//button[@type='submit']/descendant::span[text()='Done']";
 
     public DrivingRequirementsPage() {
         super();
@@ -49,7 +54,7 @@ public class DrivingRequirementsPage extends TabsPage {
     }
 
     public void insertValidData() {
-        setImage(getWebElement(By.xpath(getVehicleInsuranceImageXpath())), null);
+        //setImage(getWebElement(By.xpath(getVehicleInsuranceImageXpath())), null);
 
         clickOn(getWebElement(By.id("verificationDelivery")));
         clickOn(getWebElement(By.id("verificationLicenseTime")));
@@ -68,6 +73,8 @@ public class DrivingRequirementsPage extends TabsPage {
 
         Setup.getWait().thread(500);
 
+        Setup.getActions().moveToElement(getWebElement(By.id("insuranceRenewal"))).build().perform();
+        Setup.getActions().click(getWebElement(By.id("insuranceRenewal")));
         sendDataToInput(getWebElement(By.id("insuranceRenewal")),
                 getFaker().name().firstName(), null, getStepThreeForm());
 
@@ -75,7 +82,6 @@ public class DrivingRequirementsPage extends TabsPage {
 
         sendDataToInput(getWebElement(By.id("licensePlateNo")),
                 getFaker().number().digits(6), null, getStepThreeForm());
-
         Setup.getWait().thread(500);
 
         managePlateState();
@@ -84,16 +90,23 @@ public class DrivingRequirementsPage extends TabsPage {
 
         Setup.getWait().thread(500);
 
-        setImage(getWebElement(By.xpath("//label[@title='License Plate Photo']/ancestor::div[contains(@class, "
-                + "'ant-form-item')]/descendant::input[@type='file']")), null);
+        //setImage(getWebElement(By.xpath("//label[@title='License Plate Photo']/ancestor::div[contains(@class, "
+                //+ "'ant-form-item')]/descendant::input[@type='file']")), null);
 
         Setup.getWait().thread(500);
 
-        setImage(getWebElement(By.xpath("//label[@title='Vehicle Registration Sticker']/ancestor::div[contains(@class, "
-                + "'ant-form-item')]/descendant::input[@type='file']")), null);
+        //setImage(getWebElement(By.xpath("//label[@title='Vehicle Registration Sticker']/ancestor::div[contains(@class, "
+              //  + "'ant-form-item')]/descendant::input[@type='file']")), null);
 
         Setup.getWait().thread(500);
+        //Hago la llamada al metodo despues de rellenar el formulario para que no de conflicto con los campos requeridos vacios
+
+        CheckUploadImageComponent(uploadInputButton_CICP, doneButton);
+        CheckUploadImageComponent(uploadInputButton_LPP, doneButton);
+        CheckUploadImageComponent(uploadInputButton_VRS, doneButton);
     }
+
+
 
     public void introduceDate() {
         Date date = new Date();
@@ -126,9 +139,11 @@ public class DrivingRequirementsPage extends TabsPage {
             by = "insuranceExpirationDate";
             Setup.getActions().moveToElement(getWebElement(By.id(by))).build().perform();
             Setup.getActions().click(getWebElement(By.id(by))).build().perform();
-            Setup.getActions().sendKeys(getWebElement(By.id(by)), short_date.format(future_date).toString())
-                    .build().perform();
-            manageDate(false, randomNum);
+            //Setup.getActions().sendKeys(getWebElement(By.id(by)), short_date.format(future_date).toString()).build().perform();
+            //manageDate(false, randomNum);
+            Setup.getActions().sendKeys("12/29/2021").build().perform();
+            Setup.getActions().sendKeys(Keys.ENTER);
+
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
