@@ -42,9 +42,9 @@ public class DriverStep extends Steps{
 		}
 	}
 
-	public void theSystemOpensView(String view) {
+	public void theSystemOpensView() {
 		try {
-			Assert.assertTrue(driverListPage.systemOpensView(view));
+			Assert.assertTrue(driverListPage.systemOpensView());
 		} catch (Exception e) {
 			Assert.fail(e.getMessage());
 		}
@@ -59,7 +59,7 @@ public class DriverStep extends Steps{
 		driverPage.clicks_button_done();
 	}
 
-	public void checkSucessfullMessage(String msg){
+	public void systemDisplaysMessage(String msg){
 		driverListPage.systemDisplaysMessage(msg);
 	}
 

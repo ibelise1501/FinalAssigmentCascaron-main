@@ -48,11 +48,11 @@ public class DriverListPage extends PageObject {
 		}
 	}
 
-	public boolean systemOpensView(String view){
+	public boolean systemOpensView(){
 		Setup.getWait().thread(5000);
 
 		try {
-			Assert.assertEquals(Setup.getDriver().findElement(By.xpath(listDriverTitle)).getText(),view);
+			Assert.assertEquals(Setup.getDriver().findElement(By.xpath(listDriverTitle)).getText(),"Drivers List");
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -79,7 +79,6 @@ public class DriverListPage extends PageObject {
 				return alert;
 			}
 		});
-		//Assert.assertEquals(msg.getText(), message);
 		Assert.assertEquals(alert.getText(), message);
 	}
 

@@ -28,10 +28,11 @@ Feature: Add Driver 2.3
     When User clicks on "Add Driver" button.
       And The system opens the "Add Driver" view.
       And The user inserts a valid data
-      And User clicks on the "Add" button.
-    Then System returns to the "Drivers List" view
-      And The System displays message "A new Driver was successfully created."
-      And The System Creates a new Driver in "On-boarding" status.
-      And The default rating is 4 points
-      And System registers the creation date.
-      And The System sends from the Support account an email notifying the driver creation
+      And User clicks on the Add button.
+    Then The System displays message "A new Driver was successfully created."
+      And System returns to the "Drivers List" view
+  #TODO
+      #And The System Creates a new Driver in "On-boarding" status.
+      #And The default rating is 4 points
+      #And System registers the creation date.
+

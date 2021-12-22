@@ -46,16 +46,17 @@ public class DriverStepDefinition {
 	public void user_clicks_on_the_Add_button() {
 		driverSteps.clickOnAddBtn();
 	}
-	@Then("System returns to the \"Drivers List\" view")
-	public void system_returns_to_the_Drivers_List_view(String view) {
-		driverSteps.theSystemOpensView(view);
 
-	}
-	@Then("The System displays message \"A new Driver was successfully created.\"")
+	@Then("The System displays message {string}")
 	public void the_system_displays_message(String message) {
-
-		driverSteps.checkSucessfullMessage(message);
+		driverSteps.systemDisplaysMessage(message);
 	}
+	@Then("System returns to the \"Drivers List\" view")
+	public void system_returns_to_the_Drivers_List_view() {
+		driverSteps.theSystemOpensView();
+
+	}
+
 	@Then("The System Creates a new Driver in {string} status.")
 	public void the_system_creates_a_new_driver_in_status(String string) {
 
