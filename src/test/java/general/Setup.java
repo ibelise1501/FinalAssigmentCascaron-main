@@ -32,7 +32,8 @@ public final class Setup {
 
 	@Before
 	public void InitSetup() {
-		System.setProperty("webdriver.chrome.driver", System.getenv("CHROME_DRIVER"));
+		//System.setProperty("webdriver.chrome.driver", System.getenv("CHROME_DRIVER"));
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Kitty\\Desktop\\Curso selenium\\chromedriver.exe");
 		//String browser = System.getProperty("browser");
 		System.setProperty("webdriver.chrome.silentOutput", "true");
 		ChromeOptions options = new ChromeOptions();

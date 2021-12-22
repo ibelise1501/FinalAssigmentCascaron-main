@@ -3,6 +3,7 @@ package general;
 import goheavy.driver.DriverStep;
 import goheavy.vehicles.VehicleStep;
 import io.cucumber.java.en.Given;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,7 +14,9 @@ public class GeneralSteps extends PageObject {
     private String menuXpath;
     private String SettingsXpath;
     private String AccountSettingsXpath;
+    private String DriversXpath;
     private By element;
+    private String driverXpath;
     private VehicleStep vehicleStep;
     private DriverStep driverStep;
 
@@ -23,6 +26,8 @@ public class GeneralSteps extends PageObject {
         setLogOutStep2Xpath("//span[@class='ant-dropdown-menu-title-content' and text()='Logout']");
         setMenuXpath("//ul[@class='ant-menu ant-menu-root ant-menu-inline ant-menu-light' and @role='menu']");
         setSettingsXpath("//span[text()='Settings']");
+        setdriverXpath("(//span[text()='Drivers'])[1]");
+
         setAccountSettingsXpath("//span[text()='Account Settings']");
         vehicleStep = new VehicleStep();
         driverStep = new DriverStep();
@@ -34,6 +39,14 @@ public class GeneralSteps extends PageObject {
 
     private void setElement(By element) {
         this.element = element;
+    }
+
+    private String getdriverXpath() {
+        return driverXpath;
+    }
+
+    private void setdriverXpath(String driverXpath) {
+        this.driverXpath = driverXpath;
     }
 
     private String getAccountSettingsXpath() {
@@ -100,6 +113,7 @@ public class GeneralSteps extends PageObject {
         waitForSpinnerToDissapear();
     }
 
+
     @Given("The user is in {string} view.")
     public void the_user_is_in_account_settings_view(String view) {
         try {
@@ -115,4 +129,7 @@ public class GeneralSteps extends PageObject {
             vehicleStep.checkPage();
         }
     }
+
+
+
 }

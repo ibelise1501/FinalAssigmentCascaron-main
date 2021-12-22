@@ -31,9 +31,9 @@ Feature: Add Vehicle 2.2
   Background:
     Given Any "GoHeavy Admin / Fleet Owner" is logged
     And The user is in "Vehicles & Insurance List" view.
+
 #La funcion UploadFile fue incluida dentro de la logica del Insert Valid data
   Scenario: Add Vehicle 2.2 -- Add Vehicle
-
     When User clicks on "Add Vehicle" button.
      And The system opens the "Add Vehicle" view.
      And The user inserts valid data

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -237,6 +238,24 @@ public class PageObject {
             // return an array of all Menu value
         }
         return list;
+    }
+    //Creado para forzar el relleno todos los campos que me dieron trabajo :D
+    public void fillComplicatedFields(String xpath, String value) {
+        waitForSpinningElementDissapear();
+        try {
+
+            Setup.getActions().moveToElement(getWebElement(By.xpath(xpath))).build().perform();
+            Setup.getActions().click(getWebElement(By.xpath(xpath))).build().perform();
+            Setup.getWait().thread(4000);
+            Setup.getActions().sendKeys(value).build().perform();
+            Setup.getWait().thread(4000);
+            Setup.getActions().sendKeys(Keys.ENTER).build().perform();
+
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+
+
     }
 
 }

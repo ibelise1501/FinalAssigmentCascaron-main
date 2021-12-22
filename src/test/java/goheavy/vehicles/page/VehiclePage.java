@@ -512,12 +512,6 @@ public class VehiclePage extends PageObject {
 
         }
 
-        //inputBtn.sendKeys("C:\\Users\\Kitty\\Desktop\\pl.xlsx");
-
-        //nextBtn.click();
-
-
-        //systemDisplaysMessage("You can only upload JPG/JPEG/PNG files");
-    }
+            }
 }
 
