@@ -47,13 +47,13 @@ public class DriverStepDefinition {
 		driverSteps.clickOnAddBtn();
 	}
 
-	@Then("The System displays message {string}")
-	public void the_system_displays_message(String message) {
-		driverSteps.systemDisplaysMessage(message);
+	@Then("The System displays message \"A new Driver was successfully created.\"")
+	public void the_system_displays_message() {
+		driverSteps.systemDisplaysMessage();
 	}
 	@Then("System returns to the \"Drivers List\" view")
 	public void system_returns_to_the_Drivers_List_view() {
-		driverSteps.theSystemOpensView();
+		driverSteps.theSystemReturnsToDriverListView();
 
 	}
 

@@ -15,11 +15,12 @@ import java.util.function.Function;
 
 public class DriverListPage extends PageObject {
 	private String addDriverBtn = "//span[text()='Add Driver']/ancestor::button[@class='ant-btn ant-btn-primary']";
-	private String listDriverTitle = "//span[contains(text(),'Drivers List')]";
+	private String listDriverTitle;
 
 	public DriverListPage() {
 		super();
 		this.urlpath = "/driver";
+		settListDriverTitle("//span[contains(text(),'Drivers List')]");
 	}
 
 	private String getaddDriverBtn() {
@@ -48,19 +49,18 @@ public class DriverListPage extends PageObject {
 		}
 	}
 
-	public boolean systemOpensView(){
-		Setup.getWait().thread(5000);
+	public boolean SystemReturnsToDriverListView(){
+		waitForSpinningElementDissapear();
 
 		try {
-			Assert.assertEquals(Setup.getDriver().findElement(By.xpath(listDriverTitle)).getText(),"Drivers List");
+			Assert.assertEquals("Drivers List", Setup.getDriver().findElement(By.xpath("//*[contains(text(),'Drivers List')]")).getText());
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
 
-	public void systemDisplaysMessage(String message) {
-		waitForSpinningElementDissapear();
+	public void systemDisplaysMessage() {
 		String xpath = "//div[@class='ant-notification ant-notification-topRight']";
 
 		WebElement alert = getWebElement(By.xpath(xpath));
@@ -79,7 +79,7 @@ public class DriverListPage extends PageObject {
 				return alert;
 			}
 		});
-		Assert.assertEquals(alert.getText(), message);
+		Assert.assertEquals(alert.getText(), "A new Driver was successfully created.");
 	}
 
 
