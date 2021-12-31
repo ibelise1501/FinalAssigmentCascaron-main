@@ -19,7 +19,7 @@ public class DriverStepDefinition {
 		driverPage = new DriverPage();
 	}
 
-
+	//Metodos relacionados con el feature Add Driver
 	@When("User clicks on \"Add Driver\" button.")
 	public void user_clicks_on_Add_Driver_button() {
 		try {
@@ -51,26 +51,56 @@ public class DriverStepDefinition {
 	public void the_system_displays_message() {
 		driverSteps.systemDisplaysMessage();
 	}
+
 	@Then("System returns to the \"Drivers List\" view")
 	public void system_returns_to_the_Drivers_List_view() {
 		driverSteps.theSystemReturnsToDriverListView();
-
 	}
 
-	@Then("The System Creates a new Driver in {string} status.")
-	public void the_system_creates_a_new_driver_in_status(String string) {
+	@Then("The System Creates a new Driver in \"On-boarding\" status.")
+	public void the_system_creates_a_new_driver_in_status() {
+		driverSteps.checkStatus();
+	}
 
-	}
-	@Then("The default rating is {int} points")
-	public void the_default_rating_is_points(Integer int1) {
+	//Metodos relacionados con el feature Edit Driver
 
+	@When("User clicks on the \"Edit\" icon.")
+	public void user_clicks_on_the_Edit_icon() {
+		driverSteps.clickOnEditBtn();
 	}
-	@Then("System registers the creation date.")
-	public void system_registers_the_creation_date() {
 
+	@When("The System displays the \"Edit Driver\" view with the data preloaded.")
+	public void the_system_displays_the_Edit_Driver_view_with_the_data_preloaded() {
+		driverSteps.checkEditDriverview();
 	}
-	@Then("The System sends from the Support account an email notifying the driver creation")
-	public void the_system_sends_from_the_support_account_an_email_notifying_the_driver_creation() {
 
+	@When("The User set the Status to \"GoHeavy Ready\".")
+	public void the_user_set_the_status_to_GoHeavy_Ready() {
+		driverSteps.updateStatusTo_GoHeavyReady();
 	}
+
+	@And("The User clicks on the \"Update\" button.")
+	public void theUserClicksOnTheUpdateButton() {
+		driverSteps.theUserClicksOnTheUpdateButton();
 	}
+
+	@And("The system updates the status to \"GoHeavy Ready\".")
+	public void theSystemUpdatesTheStatusToGoHeavyReady() {
+		driverSteps.checkStatus();
+	}
+
+	@Given("A new \"Driver\" is created.")
+	public void aNewDriverIsCreated() {
+		//TODO
+	}
+
+	@When("The User updates the Driver's status to \"GoHeavy Ready\".")
+	public void theUserUpdatesTheDriverSStatusTo() {
+		//TODO
+	}
+
+	@Then("The Driver is active.")
+	public void theDriverIsActive() {
+		//TODO
+	}
+}

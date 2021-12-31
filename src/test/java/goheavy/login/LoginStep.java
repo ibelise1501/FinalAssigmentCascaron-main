@@ -19,7 +19,7 @@ public class LoginStep extends Steps {
 	public void checkPage() {
 		try {
 		String path = loginPage.getPagePath().toLowerCase();
-		//The user is at the login page
+		//The user is at the login goheavy.documents.page
 		Assert.assertTrue("The path provided is not correct in the url. path: " + path,
 				loginPage.getCurrentUrl().toLowerCase().contains(path));
 

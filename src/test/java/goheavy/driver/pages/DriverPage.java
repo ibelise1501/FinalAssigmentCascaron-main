@@ -55,6 +55,7 @@ public class DriverPage extends PageObject {
 
 
 	private String driver_AddBtn="//span[text()='Add']";
+	private String updateBtn = "//button[@class=\"ant-btn ant-btn-primary styles__ButtonSubmit-sc-1548o7b-1 khxaWf\"]";
 
 
 
@@ -73,7 +74,7 @@ public class DriverPage extends PageObject {
 		return AddDriverTitle;
 	}
 
-
+	public String getUpdateBtn(){return updateBtn;}
 	private String getdriver_LicenseNumber() {
 		return driver_LicenseNumber;
 	}
@@ -441,6 +442,14 @@ public class DriverPage extends PageObject {
 		waitForSpinningElementDissapear();
 		Setup.getWait().thread(1500);
 
+	}
+
+	public void checkEditView(){
+		//TODO
+	}
+
+	public void updateStatus(){
+		//TODO - para actualizar Status a GoHeavy Ready
 	}
 
 

@@ -19,20 +19,16 @@ Feature: Add Driver 2.3
   I Want To: add a Driver
   So That: a new Driver is registered in the system.
 
-  Background:
-    Given Any "GoHeavy Admin / Fleet Owner" is logged
-      And The user is in "Drivers List" view.
 
     Scenario: Add Driver 2.3 -- Add Driver
-
+      Given Any "GoHeavy Admin / Fleet Owner" is logged
+      And The user is in "Drivers List" view.
     When User clicks on "Add Driver" button.
       And The system opens the "Add Driver" view.
       And The user inserts a valid data
       And User clicks on the Add button.
     Then The System displays message "A new Driver was successfully created."
       And System returns to the "Drivers List" view
-  #TODO
-      #And The System Creates a new Driver in "On-boarding" status.
-      #And The default rating is 4 points
-      #And System registers the creation date.
+      And The System Creates a new Driver in "On-boarding" status.
+
 

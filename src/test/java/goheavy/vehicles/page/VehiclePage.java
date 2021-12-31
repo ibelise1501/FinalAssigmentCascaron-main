@@ -216,7 +216,7 @@ public class VehiclePage extends PageObject {
                     getPageElementBy(By.xpath(getVehicleYearMakepath())));
             Assert.assertNotNull("Vehicle Sub Section not found",
                     getPageElementBy(By.xpath(getVehicleCapacitySubSectionXpath())));
-            //TODO: Work in progress check for every element on the page to be Expected
+            //TODO: Work in progress check for every element on the goheavy.documents.page to be Expected
             return true;
         } catch (Exception e) {
             return false;
@@ -513,5 +513,8 @@ public class VehiclePage extends PageObject {
         }
 
             }
+            public void clickOnDocumentsIcon(){
+        //TODO
+    }
 }
 

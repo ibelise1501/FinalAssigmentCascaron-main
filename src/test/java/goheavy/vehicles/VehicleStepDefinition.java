@@ -83,7 +83,7 @@ public class VehicleStepDefinition {
         vehicleStep.returnToMainView();
     }
 
-    @Then("System displays message {string}")
+    @Then("System displays message \"A new Driver was successfully created.\"")
     public void system_displays_message(String message) {
         vehicleStep.systemDisplaysMessage(message);
     }
@@ -104,5 +104,9 @@ public class VehicleStepDefinition {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @And("A new \"Vehicle\" is created and associated to the \"Driver\".")
+    public void aNewIsCreatedAndAssociatedToThe() {
     }
 }

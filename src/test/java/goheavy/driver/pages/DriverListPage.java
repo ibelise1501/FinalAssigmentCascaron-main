@@ -1,5 +1,6 @@
 package goheavy.driver.pages;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import general.PageObject;
 import general.Setup;
 import org.junit.Assert;
@@ -9,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -16,6 +18,8 @@ import java.util.function.Function;
 public class DriverListPage extends PageObject {
 	private String addDriverBtn = "//span[text()='Add Driver']/ancestor::button[@class='ant-btn ant-btn-primary']";
 	private String listDriverTitle;
+	private String editBtn = "";
+	List<WebElement> docsBtn = Setup.getDriver().findElements(By.xpath("//span[@class=\"anticon anticon-file-text\"]"));
 
 	public DriverListPage() {
 		super();
@@ -37,6 +41,7 @@ public class DriverListPage extends PageObject {
 		listDriverTitle = listDriverTitle;
 	}
 
+	public String getEditBtn(){return editBtn;}
 
 	public boolean userClicksOnAddDriverButton() {
 		try {
@@ -80,6 +85,14 @@ public class DriverListPage extends PageObject {
 			}
 		});
 		Assert.assertEquals(alert.getText(), "A new Driver was successfully created.");
+	}
+
+	public void checkStatus(){
+		//TODO
+	}
+
+	public void clickOnDocumentsIcon(){
+		//TODO
 	}
 
 

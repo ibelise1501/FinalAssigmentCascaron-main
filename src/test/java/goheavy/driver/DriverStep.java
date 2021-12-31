@@ -1,6 +1,9 @@
 package goheavy.driver;
 
 import goheavy.driver.pages.DriverListPage;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -63,5 +66,33 @@ public class DriverStep extends Steps{
 	public void systemDisplaysMessage(){
 		driverListPage.systemDisplaysMessage();
 	}
+
+	public void checkStatus(){
+		//checkear el estado del nuevo driver
+		driverListPage.checkStatus();
+	}
+
+	public void clickOnEditBtn() {
+		driverListPage.clickOn(Setup.getDriver().findElement(By.xpath(driverListPage.getEditBtn())));
+	}
+
+	public void checkEditDriverview() {
+		driverPage.waitAddittionalTime();
+		driverPage.checkEditView();
+	}
+
+	public void updateStatusTo_GoHeavyReady() {
+		driverPage.updateStatus();
+	}
+
+	public void theUserClicksOnTheUpdateButton() {
+		driverPage.clickOnElement(Setup.getDriver().findElement(By.xpath(driverPage.getUpdateBtn())),false);
+	}
+
+	public void clickOnDocumentsIcon(){
+		driverListPage.clickOnDocumentsIcon();
+	}
+
+
 
 }

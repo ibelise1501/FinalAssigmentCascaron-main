@@ -72,12 +72,13 @@ public class LoginStepDefinition {
 		}
 	}
 
+
 	@Given("Any {string} is logged")
 	public void any_user_is_logged(String user) {
 		Properties cred = (Properties) Setup.getValueStore("defaultProperties");
 		String email = cred.getProperty("default.email");
 		String pass = cred.getProperty("default.password");
-		if (user.equals("GoHeavy Admin / Fleet Owner") || user.equals("GoHeavy Adm / Fleet Owner")) {
+		if (user.equals("GoHeavy Admin / Fleet Owner") || user.equals("GoHeavy Adm / Fleet Owner") || user.equals("GoHeavy Admin / Document Approver")) {
 			email = cred.getProperty("vehicle.email");
 			pass = cred.getProperty("vehicle.password");
 		} else if (user.equals("GoHeavy Administrator / Fleet Owner")) {

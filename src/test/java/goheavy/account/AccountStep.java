@@ -24,7 +24,7 @@ public class AccountStep extends Steps{
             accountPage.waitForSpinningElementDissapear();
             accountPage.getFrom();
         } catch (Exception e) {
-            fail("The view do not match with Account page.");
+            fail("The view do not match with Account goheavy.documents.page.");
         }
     }
 }

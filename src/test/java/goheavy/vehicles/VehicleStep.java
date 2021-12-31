@@ -134,4 +134,8 @@ public class VehicleStep extends Steps {
        vehicleInfo.CheckUploadImageComponent(vehicleInfo.getUploadInputButton(), vehicleInfo.getNextBtn());
     }
 
+    public void clickOnDocumentsIcon(){
+        //TODO
+    }
+
 }
