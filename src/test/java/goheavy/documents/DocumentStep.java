@@ -32,8 +32,13 @@ public class DocumentStep extends Steps {
         documentPage.updateStatus();
     }
 
-    public void ApproveDocs(){
-        documentPage.ApproveDocs();
+    public void ApproveDriverDocs(){
+        documentPage.approveAllDriverDocs();
+    }
+
+        public void ApproveVehicleDocs(){
+
+        documentPage.approveAllVehicleDocs();
     }
 
     public void checkTheModalView(String view){

@@ -40,7 +40,6 @@ Feature: Add Vehicle 2.2
      Then System returns to the "Vehicles & Insurance List" view
      And System displays message "A new Vehicle was successfully created."
      And The System Creates a new Vehicle in "On-boarding" status.
-     And The System registers the creation date.
 
 
 

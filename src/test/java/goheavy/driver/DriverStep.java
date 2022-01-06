@@ -53,9 +53,11 @@ public class DriverStep extends Steps{
 		}
 	}
 
-	public void insertValidData_ClicksAdd(){
+	public String insertValidData_ClicksAdd(){
 		Setup.getWait().thread(5000);
-		driverPage.insertValidData();
+		String cell = driverPage.insertValidData();
+
+		return cell;
 	}
 
 	public void clickOnAddBtn(){
@@ -89,10 +91,14 @@ public class DriverStep extends Steps{
 		driverPage.clickOnElement(Setup.getDriver().findElement(By.xpath(driverPage.getUpdateBtn())),false);
 	}
 
-	public void clickOnDocumentsIcon(){
+	/*public void clickOnDocumentsIcon(){
 		driverListPage.clickOnDocumentsIcon();
+	}*/
+
+	public void clickOnDocs(String cell){
+		driverListPage.searchDriver(cell);
+		driverListPage.clickOnDocuments();
+
 	}
-
-
 
 }

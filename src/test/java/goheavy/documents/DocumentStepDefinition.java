@@ -35,8 +35,7 @@ public class DocumentStepDefinition {
     @When("User clicks on the \"Documents\" icon")
     public void user_clicks_on_the_icon() {
         //TODO - validar la vista en la que se encuentra
-        driverStep.clickOnDocumentsIcon();
-        vehicleStep.clickOnDocumentsIcon();
+
     }
 
     @And("The system displays the Documents {string} view.")
@@ -56,16 +55,16 @@ public class DocumentStepDefinition {
 
     @When("The User clicks on the \"Approve\" button.")
     public void the_user_clicks_on_the_Approve_button(String string) {
-        docStep.ApproveDocs();
+        docStep.ApproveDriverDocs();
     }
 
-    @Then("The system changes the Driver{string}s document status to \"Clear\"")
+    @Then("The system changes the Driver / Vehicle document status to \"Clear\"")
     public void theSystemChangesTheDriverSVehicleSDocumentStatusTo() {
         docStep.checkStatus();
     }
 
 
-    @And("The Driver and Vehicle's documents are Approved.")
-    public void theDriverAndVehicleSDocumentsAreApproved() {
-    }
+
+
+
 }

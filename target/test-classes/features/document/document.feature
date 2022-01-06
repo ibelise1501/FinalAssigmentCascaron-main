@@ -7,13 +7,13 @@ Feature: View Driver/Vehicle Documents
 
    Scenario Outline: Approve the "Documents"
     Given Any "GoHeavy Admin / Document Approver / Fleet Owner" is logged
-      And The user is in "<ListView>" view.
+      And The user is in main "<ListView>" view
     When  User clicks on the "Documents" icon
-      And The system displays the "<DocumentsView>" view.
+      And The system displays the Documents "<DocumentsView>" view.
       And User clicks on "View" icon.
-      And The system displays the "<ModalViewName>" view.
+      And The system displays the Modal "<ModalViewName>" view.
       And The User clicks on the "Approve" button.
-     Then The system changes the Driver's/Vehicle's document status to "Clear"
+     Then The system changes the Driver / Vehicle document status to "Clear"
 
     Examples:
       | ListView                  | DocumentsView                  | ModalViewName                                           |

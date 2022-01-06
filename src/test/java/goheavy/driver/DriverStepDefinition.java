@@ -1,5 +1,6 @@
 package goheavy.driver;
 
+import goheavy.documents.DocumentStep;
 import goheavy.driver.pages.DriverListPage;
 import goheavy.driver.pages.DriverPage;
 import io.cucumber.java.en.*;
@@ -11,12 +12,15 @@ public class DriverStepDefinition {
 	private DriverStep driverSteps;
 	private DriverListPage driverListPage;
 	private DriverPage driverPage;
+	private DocumentStep documentStep;
+	private String cell;
 
 	public DriverStepDefinition() {
 		generalSteps = new GeneralSteps();
 		driverSteps = new DriverStep();
 		driverListPage = new DriverListPage();
 		driverPage = new DriverPage();
+		documentStep = new DocumentStep();
 	}
 
 	//Metodos relacionados con el feature Add Driver
@@ -89,9 +93,16 @@ public class DriverStepDefinition {
 		driverSteps.checkStatus();
 	}
 
+	//Metodo general para crear un driver
 	@Given("A new \"Driver\" is created.")
 	public void aNewDriverIsCreated() {
-		//TODO
+		 cell = driverSteps.insertValidData_ClicksAdd();
+	}
+
+	@Given("The Driver's documents are Approved.")
+	public void the_driver_s_documents_are_approved() {
+		driverSteps.clickOnDocs(cell);
+		documentStep.ApproveDriverDocs();
 	}
 
 	@When("The User updates the Driver's status to \"GoHeavy Ready\".")

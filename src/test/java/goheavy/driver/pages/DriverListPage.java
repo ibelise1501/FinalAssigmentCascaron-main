@@ -5,17 +5,20 @@ import general.PageObject;
 import general.Setup;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
+import java.security.Key;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 public class DriverListPage extends PageObject {
+	private DriverPage driverPage;
 	private String addDriverBtn = "//span[text()='Add Driver']/ancestor::button[@class='ant-btn ant-btn-primary']";
 	private String listDriverTitle;
 	private String editBtn = "";
@@ -25,6 +28,7 @@ public class DriverListPage extends PageObject {
 		super();
 		this.urlpath = "/driver";
 		settListDriverTitle("//span[contains(text(),'Drivers List')]");
+		this.driverPage = new DriverPage();
 	}
 
 	private String getaddDriverBtn() {
@@ -95,5 +99,14 @@ public class DriverListPage extends PageObject {
 		//TODO
 	}
 
+	public void searchDriver(String driverCell){
+		String searchField = "//input[@placeholder=\"Search...\"]";
+		Setup.getActions().sendKeys(driverCell, Keys.ENTER);
+	}
 
+	public void clickOnDocuments(){
+		String docs = "(//span[@class=\"rifi_link_icon_action\"] )[1]";
+		Setup.getActions().click(getWebElement(By.xpath(docs)));
+
+	}
 }

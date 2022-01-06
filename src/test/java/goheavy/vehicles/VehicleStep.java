@@ -1,5 +1,6 @@
 package goheavy.vehicles;
 
+import goheavy.documents.DocumentStep;
 import javafx.scene.control.TabPane;
 import org.junit.Assert;
 
@@ -20,12 +21,15 @@ public class VehicleStep extends Steps {
     public VehiculeFeaturesPage vehicleFeture;
     public DrivingRequirementsPage drivingRequirements;
     private TabsPage tp;
+    String VINID;
+    private DocumentStep documentStep;
 
     public VehicleStep() {
         vehiclePage = new VehiclePage();
         vehicleInfo = new VehiculeInfoPage();
         vehicleFeture = new VehiculeFeaturesPage();
         drivingRequirements = new DrivingRequirementsPage();
+        documentStep = new DocumentStep();
 
     }
 
@@ -68,11 +72,12 @@ public class VehicleStep extends Steps {
         }
     }
 
-    public void userInsertsValidDataAndClicksDone() {
+    public String userInsertsValidDataAndClicksDone() {
 
         try {
             TabsPage tp = new VehiculeInfoPage();
             tp.insertValidData();
+            VINID = vehicleInfo.getVINInputID();
             tp = new VehiculeFeaturesPage();
             tp.insertValidData();
             tp = new DrivingRequirementsPage();
@@ -80,6 +85,8 @@ public class VehicleStep extends Steps {
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
+
+        return VINID;
     }
 
     public void systemCreatesVehicleOnStatus(String status) {
@@ -134,8 +141,16 @@ public class VehicleStep extends Steps {
        vehicleInfo.CheckUploadImageComponent(vehicleInfo.getUploadInputButton(), vehicleInfo.getNextBtn());
     }
 
-    public void clickOnDocumentsIcon(){
-        //TODO
+    public void approveVehicleDocs(String VINID){
+        vehiclePage.searchVehicle(VINID);
+        vehiclePage.clickOnDocuments();
+        documentStep.ApproveVehicleDocs();
+
     }
+
+    public void associateDriver(String VINID, String driver){
+        vehiclePage.assignVehicle(VINID, driver);
+    }
+
 
 }

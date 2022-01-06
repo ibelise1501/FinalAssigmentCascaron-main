@@ -13,7 +13,7 @@ Feature: View Driver/Vehicle Documents
       And User clicks on "View" icon.
       And The system displays the Modal "<ModalViewName>" view.
       And The User clicks on the "Approve" button.
-     Then The system changes the Driver's/Vehicle's document status to "Clear"
+     Then The system changes the Driver / Vehicle document status to "Clear"
 
     Examples:
       | ListView                  | DocumentsView                  | ModalViewName                                           |

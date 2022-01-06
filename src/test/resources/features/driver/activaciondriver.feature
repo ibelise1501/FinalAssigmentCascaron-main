@@ -24,8 +24,10 @@ Feature: Active a Driver
 
     Scenario: Active a Driver
       Given A new "Driver" is created.
-        And A new "Vehicle" is created and associated to the "Driver".
-        And The Driver and Vehicle's documents are Approved.
+        And The Driver's documents are Approved.
+        And A new "Vehicle" is created.
+        And The Vehicle's documents are Approved.
+        And The Vehicle has a Driver associated.
     When The User updates the Driver's status to "GoHeavy Ready".
       Then The Driver is active.
 

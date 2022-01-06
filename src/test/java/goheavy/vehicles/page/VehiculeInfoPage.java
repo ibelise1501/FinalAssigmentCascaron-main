@@ -198,7 +198,7 @@ public class VehiculeInfoPage extends TabsPage {
     }
 
 
-    private String getVINInputID() {
+    public String getVINInputID() {
         return this.VINInputID;
     }
 
@@ -284,8 +284,9 @@ public class VehiculeInfoPage extends TabsPage {
     public void insertValidData() {
 
         sendDataToInput(getWebElement(By.id(getVINInputID())), getFaker().number().digits(17), null, getFormScroll());
+        String VIN = Setup.getDriver().findElement(By.id(getVINInputID())).getText();
 
-        checkVehicleTypeComponentBehaviour();
+                checkVehicleTypeComponentBehaviour();
         String vehicleMake = getFaker().superhero().name();
         Setup.setKeyValueStore("vehicleMake", vehicleMake);
 
@@ -316,7 +317,7 @@ public class VehiculeInfoPage extends TabsPage {
         waitForSpinningElementDissapear();
         Setup.getWait().thread(1500);
 
-    }
+            }
 
     @Override
     public void CheckUploadImageComponent(String uploadInputButton, String nextBtn) {

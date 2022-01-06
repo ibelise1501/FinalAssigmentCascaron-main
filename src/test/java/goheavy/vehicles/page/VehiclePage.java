@@ -377,6 +377,26 @@ public class VehiclePage extends PageObject {
         }
     }
 
+    public void assignVehicle(String vehicle, String driver){
+        searchVehicle(vehicle);
+        String status = Setup.getDriver().findElement(By.xpath("//*[contains(@class, \"ant-tag ant-tag\")]")).getText();
+        String assignAction = "//span[@class='anticon anticon-check-square']";
+
+        Assert.assertEquals(status,"Clear");
+        Assert.assertTrue(Setup.getDriver().findElement(By.xpath(assignAction)).isDisplayed());
+
+        Setup.getActions().click(Setup.getDriver().findElement(By.xpath(assignAction)));
+
+        String searchField = "//input[@type='search']";
+        Setup.getDriver().findElement(By.xpath(searchField)).sendKeys(driver, Keys.ENTER);
+
+        Setup.getActions().click(getWebElement(By.xpath("//span[contains(text(),'Assign')]")));
+
+        //Falta verificar que el nombre del Driver sea mostrado en la lista - columna Driver Name
+
+
+    }
+
     public void clicks_button_done() {
         clickOn(getWebElement(By.xpath("//button[@type='submit']")));
 
@@ -513,8 +533,16 @@ public class VehiclePage extends PageObject {
         }
 
             }
-            public void clickOnDocumentsIcon(){
-        //TODO
+
+    public void searchVehicle(String VINID){
+        String searchField = "//input[@placeholder=\"Search...\"]";
+        Setup.getActions().sendKeys(VINID, Keys.ENTER);
+    }
+
+    public void clickOnDocuments(){
+        String docs = "(//span[@class=\"rifi_link_icon_action\"] )[1]";
+        Setup.getActions().click(getWebElement(By.xpath(docs)));
+
     }
 }
 

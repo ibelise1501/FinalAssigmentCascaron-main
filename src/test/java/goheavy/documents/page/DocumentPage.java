@@ -33,8 +33,33 @@ public class DocumentPage extends PageObject {
     public void CheckStatus(){
         //checkear el status del documento
     }
+    public void updateStatus(){
+        //checkear el status del documento
+    }
 
     public void checkTheModalView(String view){
         //checkear el nombre del modal
+    }
+
+    public void approveAllDriverDocs(){
+        //Faltaria checkear el nombre de la vista (Documents for "Driver's name")
+        for (WebElement element : documentsList
+             ) {
+            Setup.getActions().click(element);
+            //Faltaria checkear el nombre de la vista del modal ("Driver's name" - Driver License)
+            Setup.getActions().click(getWebElement(By.xpath("(//button[@type=\"submit\"])[1]")));
+            //Faltaria checkear el status
+        }
+    }
+
+    public void approveAllVehicleDocs(){
+        //Faltaria checkear el nombre de la vista (Documents for "Vehicle ID No. (VIN)")
+        for (WebElement element : documentsList
+        ) {
+            Setup.getActions().click(element);
+            //Faltaria checkear el nombre de la vista del modal ("Vehicle ID No. (VIN)" - Vehicle Identification Number (VIN))
+            Setup.getActions().click(getWebElement(By.xpath("(//button[@type=\"submit\"])[1]")));
+            //Faltaria checkear el status
+        }
     }
 }
