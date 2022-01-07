@@ -20,14 +20,14 @@ Feature: Active a Driver
   So That: the Driver's status updates to GoHeavy Ready.
 
   Background:
-    Given Any "GoHeavy Admin / Fleet Owner" is logged
+    Given Any "GoHeavy Administrator / Fleet Owner" is logged
 
     Scenario: Active a Driver
-      Given A new "Driver" is created.
-        And The Driver's documents are Approved.
-        And A new "Vehicle" is created.
-        And The Vehicle's documents are Approved.
-        And The Vehicle has a Driver associated.
-    When The User updates the Driver's status to "GoHeavy Ready".
+      Given The user is in "Drivers List" view.
+      When A new "Driver" is created.
+        And A new Vehicle is associated to the Driver.
+        And The Documents are approved.
+        And The User updates the Driver's status to "GoHeavy Ready".
       Then The Driver is active.
+
 

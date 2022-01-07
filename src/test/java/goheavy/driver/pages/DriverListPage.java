@@ -21,8 +21,9 @@ public class DriverListPage extends PageObject {
 	private DriverPage driverPage;
 	private String addDriverBtn = "//span[text()='Add Driver']/ancestor::button[@class='ant-btn ant-btn-primary']";
 	private String listDriverTitle;
-	private String editBtn = "";
+	private String editBtn = "(//span[@class='anticon anticon-edit'])[1]";
 	List<WebElement> docsBtn = Setup.getDriver().findElements(By.xpath("//span[@class=\"anticon anticon-file-text\"]"));
+	private String driverLink = "(//span[contains(text(),'Drivers')])[1]";
 
 	public DriverListPage() {
 		super();
@@ -69,6 +70,11 @@ public class DriverListPage extends PageObject {
 		}
 	}
 
+	public void clickOnDriverLink(){
+		Setup.getActions().click(getWebElement(By.xpath(driverLink)));
+		SystemReturnsToDriverListView();
+	}
+
 	public void systemDisplaysMessage() {
 		String xpath = "//div[@class='ant-notification ant-notification-topRight']";
 
@@ -91,22 +97,30 @@ public class DriverListPage extends PageObject {
 		Assert.assertEquals(alert.getText(), "A new Driver was successfully created.");
 	}
 
-	public void checkStatus(){
+	public void checkStatus(String driverCell){
 		//TODO
+		searchDriver(driverCell);
+		String status = "//span[@class='ant-tag ant-tag-geekblue']";
+		Assert.assertEquals(Setup.getDriver().findElement(By.xpath(status)).getText(),"GoHeavy Ready");
 	}
 
-	public void clickOnDocumentsIcon(){
-		//TODO
+	public void clickOnEditBtn(){
+		Setup.getActions().click(getWebElement(By.xpath(editBtn)));
 	}
 
 	public void searchDriver(String driverCell){
 		String searchField = "//input[@placeholder=\"Search...\"]";
-		Setup.getActions().sendKeys(driverCell, Keys.ENTER);
+		Setup.getActions().sendKeys(Setup.getDriver().findElement(By.xpath(searchField)), driverCell, Keys.ENTER);
 	}
 
 	public void clickOnDocuments(){
 		String docs = "(//span[@class=\"rifi_link_icon_action\"] )[1]";
 		Setup.getActions().click(getWebElement(By.xpath(docs)));
 
+	}
+
+	public void clickOnVehiclesIcon(){
+		String vehiclesIcon = "//span[@class=\"rifi_link_icon_action\"]//ancestor::span[@class=\"anticon anticon-car\"]";
+		Setup.getActions().click(getWebElement(By.xpath(vehiclesIcon)));
 	}
 }

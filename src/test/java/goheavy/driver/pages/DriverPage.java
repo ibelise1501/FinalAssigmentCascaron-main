@@ -415,8 +415,8 @@ public class DriverPage extends PageObject {
 
 		sendDataToInput(getWebElement(By.xpath(driver_experience)), "4", null);
 		sendDataToInput(getWebElement(By.xpath(driver_mobile)), getFaker().number().digits(10), null);
-		String mobile = Setup.getDriver().findElement(By.xpath(driver_mobile)).getText();
-		sendDataToInput(getWebElement(By.xpath(driver_email)), getFaker().internet().emailAddress(), null);
+		String mobile = Setup.getDriver().findElement(By.xpath(driver_mobile)).getAttribute("value");
+				sendDataToInput(getWebElement(By.xpath(driver_email)), getFaker().internet().emailAddress(), null);
 
 		fillComplicatedFields(driver_shirtSize,"M");
 
@@ -433,7 +433,7 @@ public class DriverPage extends PageObject {
 		sendDataToInput(getWebElement(By.xpath(driver_LicenseNumber)), getFaker().number().digits(7), null);
 
 		fillComplicatedFields(driver_IssuedDate, "12/01/2016");
-		fillComplicatedFields(driver_ExpDate, "12/31/2021");
+		fillComplicatedFields(driver_ExpDate, "12/31/2022");
 		fillComplicatedFields(driver_ClassType, "M");
 
 
@@ -447,12 +447,16 @@ public class DriverPage extends PageObject {
 
 	}
 
-	public void checkEditView(){
-		//TODO
-	}
-
 	public void updateStatus(){
-		//TODO - para actualizar Status a GoHeavy Ready
+		String status = "//input[@id='status']";
+		try {
+			Assert.assertTrue(Setup.getDriver().findElement(By.xpath(status)).isEnabled());
+			sendDataToInput(getWebElement(By.xpath(status)),"GoHeavy Ready", Keys.ENTER);
+			clicks_button_done();
+		}catch (Exception e){
+			 System.out.println(e);
+		}
+
 	}
 
 

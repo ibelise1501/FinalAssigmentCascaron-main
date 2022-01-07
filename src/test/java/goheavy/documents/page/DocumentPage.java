@@ -41,7 +41,7 @@ public class DocumentPage extends PageObject {
         //checkear el nombre del modal
     }
 
-    public void approveAllDriverDocs(){
+    public void approveAllDocs(){
         //Faltaria checkear el nombre de la vista (Documents for "Driver's name")
         for (WebElement element : documentsList
              ) {
@@ -52,14 +52,5 @@ public class DocumentPage extends PageObject {
         }
     }
 
-    public void approveAllVehicleDocs(){
-        //Faltaria checkear el nombre de la vista (Documents for "Vehicle ID No. (VIN)")
-        for (WebElement element : documentsList
-        ) {
-            Setup.getActions().click(element);
-            //Faltaria checkear el nombre de la vista del modal ("Vehicle ID No. (VIN)" - Vehicle Identification Number (VIN))
-            Setup.getActions().click(getWebElement(By.xpath("(//button[@type=\"submit\"])[1]")));
-            //Faltaria checkear el status
-        }
-    }
+
 }

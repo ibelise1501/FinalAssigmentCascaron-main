@@ -32,37 +32,6 @@ public class DocumentStepDefinition {
         return view;
     }
 
-    @When("User clicks on the \"Documents\" icon")
-    public void user_clicks_on_the_icon() {
-        //TODO - validar la vista en la que se encuentra
-
-    }
-
-    @And("The system displays the Documents {string} view.")
-    public void theSystemDisplaysTheDocumentsView(String view) {
-        docStep.checkPage(view);
-    }
-
-    @When("User clicks on \"View\" icon.")
-    public void user_clicks_on_icon(String string) {
-        docStep.clickOnElement();
-    }
-
-    @And("The system displays the Modal {string} view.")
-    public void theSystemDisplaysTheModalView(String view) {
-        docStep.checkTheModalView(view);
-    }
-
-    @When("The User clicks on the \"Approve\" button.")
-    public void the_user_clicks_on_the_Approve_button(String string) {
-        docStep.ApproveDriverDocs();
-    }
-
-    @Then("The system changes the Driver / Vehicle document status to \"Clear\"")
-    public void theSystemChangesTheDriverSVehicleSDocumentStatusTo() {
-        docStep.checkStatus();
-    }
-
 
 
 

@@ -13,6 +13,43 @@ public class VehicleStepDefinition {
         vehicleStep = new VehicleStep();
         generalSteps = new GeneralSteps();
     }
+
+    @When("User clicks on \"Add Vehicle\" button.")
+    public void the_user_clicks_on_add_vehicle_button() {
+        try {
+            vehicleStep.userClicksOnAddVehicleButton();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Given("The system opens the \"Add Vehicle\" view.")
+    public void the_system_opens_the_add_vehicle_view() {
+        try {
+            vehicleStep.theSystemOpensTheAddVehicleView();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @When("User hover overs a Vehicle document image component with an image loaded")
+    public void hover_over_image_component_with_image() {
+        try {
+            vehicleStep.hoverOverImageComponent();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @When("The user inserts valid data")
+    public void the_user_inserts_valid_data_and_clicks_done_button() {
+        try {
+            vehicleStep.userInsertsValidDataAndClicksDone();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @When("User clicks on the \"Done\" button.")
     public void clicks_button() {
         vehicleStep.clicks_button_done();
@@ -67,7 +104,7 @@ public class VehicleStepDefinition {
 
     @And("A new \"Vehicle\" is created.")
     public void aNewIsCreated() {
-         VIN = vehicleStep.userInsertsValidDataAndClicksDone();
+         vehicleStep.userInsertsValidDataAndClicksDone();
     }
 
     @And("The Vehicle's documents are Approved.")
@@ -75,8 +112,5 @@ public class VehicleStepDefinition {
         vehicleStep.approveVehicleDocs(VIN);
     }
 
-    @And("The Vehicle has a Driver associated.")
-    public void theVehicleHasADriverAssociated() {
-        vehicleStep.associateDriver(String driver, String VIN);
-    }
+
 }

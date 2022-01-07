@@ -50,7 +50,7 @@ public class VehicleStep extends Steps {
 
     public void userClicksOnAddVehicleButton() {
         try {
-            Assert.assertTrue(vehiclePage.clickOnAddVehicleButton());
+            vehiclePage.clickOnAddVehicleButton();
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -72,12 +72,11 @@ public class VehicleStep extends Steps {
         }
     }
 
-    public String userInsertsValidDataAndClicksDone() {
+    public void userInsertsValidDataAndClicksDone() {
 
         try {
             TabsPage tp = new VehiculeInfoPage();
             tp.insertValidData();
-            VINID = vehicleInfo.getVINInputID();
             tp = new VehiculeFeaturesPage();
             tp.insertValidData();
             tp = new DrivingRequirementsPage();
@@ -86,7 +85,7 @@ public class VehicleStep extends Steps {
             Assert.fail(e.getMessage());
         }
 
-        return VINID;
+
     }
 
     public void systemCreatesVehicleOnStatus(String status) {
@@ -144,13 +143,11 @@ public class VehicleStep extends Steps {
     public void approveVehicleDocs(String VINID){
         vehiclePage.searchVehicle(VINID);
         vehiclePage.clickOnDocuments();
-        documentStep.ApproveVehicleDocs();
+        documentStep.ApproveDocs();
 
     }
 
-    public void associateDriver(String VINID, String driver){
-        vehiclePage.assignVehicle(VINID, driver);
-    }
+
 
 
 }

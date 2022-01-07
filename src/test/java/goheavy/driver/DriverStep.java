@@ -60,6 +60,10 @@ public class DriverStep extends Steps{
 		return cell;
 	}
 
+	public void goToDriverList(){
+		driverListPage.clickOnDriverLink();
+	}
+
 	public void clickOnAddBtn(){
 
 		driverPage.clicks_button_done();
@@ -69,35 +73,43 @@ public class DriverStep extends Steps{
 		driverListPage.systemDisplaysMessage();
 	}
 
-	public void checkStatus(){
-		//checkear el estado del nuevo driver
-		driverListPage.checkStatus();
-	}
-
-	public void clickOnEditBtn() {
-		driverListPage.clickOn(Setup.getDriver().findElement(By.xpath(driverListPage.getEditBtn())));
-	}
-
-	public void checkEditDriverview() {
-		driverPage.waitAddittionalTime();
-		driverPage.checkEditView();
-	}
-
 	public void updateStatusTo_GoHeavyReady() {
+		driverListPage.clickOnEditBtn();
 		driverPage.updateStatus();
 	}
 
-	public void theUserClicksOnTheUpdateButton() {
-		driverPage.clickOnElement(Setup.getDriver().findElement(By.xpath(driverPage.getUpdateBtn())),false);
+	public void checkDriverStatus(String cell){
+		driverListPage.checkStatus(cell);
 	}
 
-	/*public void clickOnDocumentsIcon(){
-		driverListPage.clickOnDocumentsIcon();
-	}*/
-
 	public void clickOnDocs(String cell){
-		driverListPage.searchDriver(cell);
-		driverListPage.clickOnDocuments();
+		try {
+			driverListPage.searchDriver(cell);
+			Setup.getWait().thread(5000);
+			driverListPage.clickOnDocuments();
+		}catch (Exception e){
+			System.out.println(e);
+		}
+	}
+
+	public void searchDriver(String cell){
+		try {
+			Setup.getWait().thread(5000);
+			driverListPage.searchDriver(cell);
+		}catch (Exception e){
+			System.out.println(e);
+		}
+
+	}
+
+	public void clickOnVehiclesIcon(String cell){
+		try {
+			driverListPage.searchDriver(cell);
+			Setup.getWait().thread(5000);
+			driverListPage.clickOnVehiclesIcon();
+		}catch (Exception e){
+			System.out.println(e);
+		}
 
 	}
 

@@ -3,6 +3,8 @@ package goheavy.driver;
 import goheavy.documents.DocumentStep;
 import goheavy.driver.pages.DriverListPage;
 import goheavy.driver.pages.DriverPage;
+import goheavy.vehicles.VehicleStep;
+import goheavy.vehicles.VehicleStepDefinition;
 import io.cucumber.java.en.*;
 import general.*;
 
@@ -13,6 +15,8 @@ public class DriverStepDefinition {
 	private DriverListPage driverListPage;
 	private DriverPage driverPage;
 	private DocumentStep documentStep;
+	private VehicleStep vehicleStep;
+	private VehicleStepDefinition vehicleStepDefinition;
 	private String cell;
 
 	public DriverStepDefinition() {
@@ -21,6 +25,7 @@ public class DriverStepDefinition {
 		driverListPage = new DriverListPage();
 		driverPage = new DriverPage();
 		documentStep = new DocumentStep();
+		vehicleStepDefinition = new VehicleStepDefinition();
 	}
 
 	//Metodos relacionados con el feature Add Driver
@@ -33,18 +38,10 @@ public class DriverStepDefinition {
 			System.out.println(e.getMessage());
 		}
 	}
-	@Given("The system opens the \"Add Driver\" view.")
-	public void the_system_opens_the_add_driver_view() {
-		try {
-			driverSteps.userClicksOnAddDriverButton();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
 
 	@When("The user inserts a valid data")
 	public void the_user_inserts_a_valid_data() {
-		driverSteps.insertValidData_ClicksAdd();
+		cell = driverSteps.insertValidData_ClicksAdd();
 	}
 	@When("User clicks on the Add button.")
 	public void user_clicks_on_the_Add_button() {
@@ -61,57 +58,43 @@ public class DriverStepDefinition {
 		driverSteps.theSystemReturnsToDriverListView();
 	}
 
-	@Then("The System Creates a new Driver in \"On-boarding\" status.")
-	public void the_system_creates_a_new_driver_in_status() {
-		driverSteps.checkStatus();
-	}
-
-	//Metodos relacionados con el feature Edit Driver
-
-	@When("User clicks on the \"Edit\" icon.")
-	public void user_clicks_on_the_Edit_icon() {
-		driverSteps.clickOnEditBtn();
-	}
-
-	@When("The System displays the \"Edit Driver\" view with the data preloaded.")
-	public void the_system_displays_the_Edit_Driver_view_with_the_data_preloaded() {
-		driverSteps.checkEditDriverview();
-	}
-
-	@When("The User set the Status to \"GoHeavy Ready\".")
-	public void the_user_set_the_status_to_GoHeavy_Ready() {
-		driverSteps.updateStatusTo_GoHeavyReady();
-	}
-
-	@And("The User clicks on the \"Update\" button.")
-	public void theUserClicksOnTheUpdateButton() {
-		driverSteps.theUserClicksOnTheUpdateButton();
-	}
-
-	@And("The system updates the status to \"GoHeavy Ready\".")
-	public void theSystemUpdatesTheStatusToGoHeavyReady() {
-		driverSteps.checkStatus();
-	}
-
-	//Metodo general para crear un driver
+	//Metodos relacionados con la activacion del driver
 	@Given("A new \"Driver\" is created.")
 	public void aNewDriverIsCreated() {
-		 cell = driverSteps.insertValidData_ClicksAdd();
+		user_clicks_on_Add_Driver_button();
+		the_user_inserts_a_valid_data();
+		user_clicks_on_the_Add_button();
+		the_system_displays_message();
+		//system_returns_to_the_Drivers_List_view();
 	}
 
-	@Given("The Driver's documents are Approved.")
-	public void the_driver_s_documents_are_approved() {
+	@And("A new Vehicle is associated to the Driver.")
+	public void aNewVehicleIsAssociatedToTheDriver() {
+		driverSteps.searchDriver(cell);
+		driverSteps.clickOnVehiclesIcon(cell);
+		vehicleStepDefinition.the_user_clicks_on_add_vehicle_button();
+		vehicleStepDefinition.the_user_inserts_valid_data_and_clicks_done_button();
+		//Faltaria validar que el nombre del driver aparezca listado como asociado a nuevo vehiculo
+
+	}
+
+	@And("The Documents are approved.")
+	public void theDocumentsAreApproved() {
+		driverSteps.goToDriverList();
 		driverSteps.clickOnDocs(cell);
-		documentStep.ApproveDriverDocs();
+		documentStep.ApproveDocs();
 	}
 
-	@When("The User updates the Driver's status to \"GoHeavy Ready\".")
+	@And("The User updates the Driver's status to {string}.")
 	public void theUserUpdatesTheDriverSStatusTo() {
-		//TODO
+		driverSteps.goToDriverList();
+		driverSteps.searchDriver(cell);
+		driverSteps.updateStatusTo_GoHeavyReady();
+
 	}
 
 	@Then("The Driver is active.")
 	public void theDriverIsActive() {
-		//TODO
+		driverSteps.checkDriverStatus(cell);
 	}
 }
