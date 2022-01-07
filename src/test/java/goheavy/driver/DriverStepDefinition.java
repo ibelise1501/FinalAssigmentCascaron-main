@@ -17,7 +17,7 @@ public class DriverStepDefinition {
 	private DocumentStep documentStep;
 	private VehicleStep vehicleStep;
 	private VehicleStepDefinition vehicleStepDefinition;
-	private String cell;
+	private String email;
 
 	public DriverStepDefinition() {
 		generalSteps = new GeneralSteps();
@@ -41,7 +41,7 @@ public class DriverStepDefinition {
 
 	@When("The user inserts a valid data")
 	public void the_user_inserts_a_valid_data() {
-		cell = driverSteps.insertValidData_ClicksAdd();
+		email = driverSteps.insertValidData_ClicksAdd();
 	}
 	@When("User clicks on the Add button.")
 	public void user_clicks_on_the_Add_button() {
@@ -70,8 +70,8 @@ public class DriverStepDefinition {
 
 	@And("A new Vehicle is associated to the Driver.")
 	public void aNewVehicleIsAssociatedToTheDriver() {
-		driverSteps.searchDriver(cell);
-		driverSteps.clickOnVehiclesIcon(cell);
+		driverSteps.searchDriver(email);
+		driverSteps.clickOnVehiclesIcon();
 		vehicleStepDefinition.the_user_clicks_on_add_vehicle_button();
 		vehicleStepDefinition.the_user_inserts_valid_data_and_clicks_done_button();
 		//Faltaria validar que el nombre del driver aparezca listado como asociado a nuevo vehiculo
@@ -81,20 +81,20 @@ public class DriverStepDefinition {
 	@And("The Documents are approved.")
 	public void theDocumentsAreApproved() {
 		driverSteps.goToDriverList();
-		driverSteps.clickOnDocs(cell);
+		driverSteps.clickOnDocs(email);
 		documentStep.ApproveDocs();
 	}
 
 	@And("The User updates the Driver's status to {string}.")
 	public void theUserUpdatesTheDriverSStatusTo() {
 		driverSteps.goToDriverList();
-		driverSteps.searchDriver(cell);
+		driverSteps.searchDriver(email);
 		driverSteps.updateStatusTo_GoHeavyReady();
 
 	}
 
 	@Then("The Driver is active.")
 	public void theDriverIsActive() {
-		driverSteps.checkDriverStatus(cell);
+		driverSteps.checkDriverStatus(email);
 	}
 }

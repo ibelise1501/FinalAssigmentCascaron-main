@@ -108,9 +108,14 @@ public class DriverListPage extends PageObject {
 		Setup.getActions().click(getWebElement(By.xpath(editBtn)));
 	}
 
-	public void searchDriver(String driverCell){
-		String searchField = "//input[@placeholder=\"Search...\"]";
-		Setup.getActions().sendKeys(Setup.getDriver().findElement(By.xpath(searchField)), driverCell, Keys.ENTER);
+	public void searchDriver(String driverEmail){
+		String searchField = "//input[@class=\"ant-input\"]";
+		String searchBtn = "//button[@class=\"ant-btn ant-btn-icon-only ant-input-search-button\"]";
+		//Assert.assertTrue(SystemReturnsToDriverListView());
+		//waitForSpinningElementDissapear();
+
+		Setup.getActions().sendKeys(Setup.getDriver().findElement(By.xpath(searchField)),driverEmail).build().perform();
+		Setup.getActions().click(Setup.getDriver().findElement(By.xpath(searchBtn))).build().perform();
 	}
 
 	public void clickOnDocuments(){
@@ -119,8 +124,15 @@ public class DriverListPage extends PageObject {
 
 	}
 
-	public void clickOnVehiclesIcon(){
-		String vehiclesIcon = "//span[@class=\"rifi_link_icon_action\"]//ancestor::span[@class=\"anticon anticon-car\"]";
-		Setup.getActions().click(getWebElement(By.xpath(vehiclesIcon)));
+
+	public boolean clickOnVehiclesIcon() {
+		try {
+			waitForSpinningElementDissapear();
+			WebElement element = getWebElement(By.xpath("//span[@class=\"rifi_link_icon_action\"]//ancestor::span[@class=\"anticon anticon-car\"]"));
+			clickOn(element);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

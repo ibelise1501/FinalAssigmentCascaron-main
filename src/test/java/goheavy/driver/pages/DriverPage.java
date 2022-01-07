@@ -415,8 +415,10 @@ public class DriverPage extends PageObject {
 
 		sendDataToInput(getWebElement(By.xpath(driver_experience)), "4", null);
 		sendDataToInput(getWebElement(By.xpath(driver_mobile)), getFaker().number().digits(10), null);
-		String mobile = Setup.getDriver().findElement(By.xpath(driver_mobile)).getAttribute("value");
-				sendDataToInput(getWebElement(By.xpath(driver_email)), getFaker().internet().emailAddress(), null);
+
+
+		sendDataToInput(getWebElement(By.xpath(driver_email)), getFaker().internet().emailAddress(), null);
+		String email = Setup.getDriver().findElement(By.xpath(driver_email)).getAttribute("value");
 
 		fillComplicatedFields(driver_shirtSize,"M");
 
@@ -443,7 +445,7 @@ public class DriverPage extends PageObject {
 		waitForSpinningElementDissapear();
 		Setup.getWait().thread(1500);
 
-		return mobile;
+		return email;
 
 	}
 

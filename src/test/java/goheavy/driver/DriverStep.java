@@ -92,20 +92,20 @@ public class DriverStep extends Steps{
 		}
 	}
 
-	public void searchDriver(String cell){
+	public void searchDriver(String email){
 		try {
-			Setup.getWait().thread(5000);
-			driverListPage.searchDriver(cell);
+
+			driverListPage.searchDriver(email);
 		}catch (Exception e){
 			System.out.println(e);
 		}
 
 	}
 
-	public void clickOnVehiclesIcon(String cell){
+	public void clickOnVehiclesIcon(){
 		try {
-			driverListPage.searchDriver(cell);
-			Setup.getWait().thread(5000);
+			//driverListPage.searchDriver(email);
+			//Setup.getWait().thread(5000);
 			driverListPage.clickOnVehiclesIcon();
 		}catch (Exception e){
 			System.out.println(e);
